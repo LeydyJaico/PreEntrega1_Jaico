@@ -6,13 +6,14 @@
 5- en caso de que vuelva al home debe ya mostrar el nombre ingresado
 6- en la seccion catergorias, mostrar opciones......>mostrar todo y otro opciones de busqueda por(genero, autor,y encabezado)
 */
+//
 // NOMBRE DEL PROGRAMA
 const titulo = "BookGlimpse";
 const significado = `Un espacio donde cada página es una ventana hacia nuevos mundos, ideas y emociones. 
 Aquí, los libros cobran vida con un vistazo que despierta curiosidad, inspira reflexión y conecta 
 almas lectoras con historias que trascienden el tiempo. `;
 alert(titulo + "\n\n" + significado);
-
+alert()
 // 1) HOME
 let nombreUsuario = ""; // Variable global
 const solicitarNombre = () => {
