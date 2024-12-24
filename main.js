@@ -113,7 +113,7 @@ const mostrarLibros=()=>{
         }); 
     });
     alert(libros)
-}
+};
 
 //Función para buscar libros de acuerdo al género literario
 //find(muestra el undefined)
@@ -144,7 +144,7 @@ const filtarLibrosTitulo=()=>{
     } else {
         alert(`No se encontró ningún libro con el título ${tituloBuscado}.`);
     }
-}
+};
 
 // Función para buscar libros por autor
 const filtrarLibrosAutores = () => {
@@ -188,7 +188,7 @@ function mostrarMenuDeCategorias() {
                 break;
         }
     } while (alternativa !== 5);
-}
+};
 
 // 3) LUDO TRIVIA
 const ludo = () => {
