@@ -13,7 +13,7 @@ const significado = `Un espacio donde cada página es una ventana hacia nuevos m
 Aquí, los libros cobran vida con un vistazo que despierta curiosidad, inspira reflexión y conecta 
 almas lectoras con historias que trascienden el tiempo. `;
 alert(titulo + "\n\n" + significado);
-alert()
+
 // 1) HOME
 let nombreUsuario = ""; // Variable global
 const solicitarNombre = () => {
