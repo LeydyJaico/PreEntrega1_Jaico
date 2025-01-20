@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías - Book Glimpse</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Librería SweetAlert2 -->
+</head>
+<body>
+    <header id="header"></header>
+
+    <div id="book">
+        <main class="categorias">
+            <h1>Explora nuestra Biblioteca</h1>
+            <div class="filters">
+                <select id="selectGenero">
+                    <option value="">Selecciona un género</option>
+                </select>
+                <select id="selectAutor">
+                    <option value="">Selecciona un autor</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Buscar libro o autor">
+                <button id="btnBuscar">Buscar</button>
+            </div>
+            <div id="librosContainer" class="libros-grid"></div>
+        </main>
+    </div>
+
+    <footer id="footer"></footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
+
