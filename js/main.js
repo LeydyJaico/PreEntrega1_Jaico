@@ -181,7 +181,7 @@ const listaLibrosJSON=[
         ]
     }
 ]
-// HEADER Y FOOTER GLOBALES
+// HEADER Y FOOTER 
 const header = document.getElementById("header");
 const footer = document.getElementById("footer");
 
@@ -222,7 +222,7 @@ const selectAutor = document.querySelector("#selectAutor");
 const searchInput = document.querySelector("#searchInput");
 const btnBuscar = document.querySelector("#btnBuscar");
 
-// FUNCIONES DE RENDERIZADO
+// FUNCIONES 
 const cargarGeneros = () => {
     if (!selectGenero) return;
 
@@ -311,6 +311,7 @@ selectAutor?.addEventListener("change", () => {
     renderizarLibros(librosPorAutor, generoImagen); // Pasar la imagen del género
 });
 
+//BUSCADOR ESCRIBIENDO
 btnBuscar?.addEventListener("click", () => {
     const searchText = searchInput.value.trim().toLowerCase();
 
@@ -319,7 +320,6 @@ btnBuscar?.addEventListener("click", () => {
             icon: "warning",
             title: "Campo vacío",
             text: "Por favor, ingrese un título o autor para buscar.",
-            confirmButtonColor: "#d33",
         });
         return;
     }
@@ -345,12 +345,10 @@ btnBuscar?.addEventListener("click", () => {
             icon: "error",
             title: "No encontrado",
             text: "El libro o autor no está disponible.",
-            confirmButtonColor: "#d33",
         });
     }
 });
 
-// INICIALIZACIÓN
 document.addEventListener("DOMContentLoaded", () => {
     cargarHeader();
     cargarFooter();
