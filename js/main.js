@@ -1,3 +1,186 @@
+const listaLibrosJSON=[
+    {
+        "genero": "Ficción",
+        "imagen": "img/categorias/ficcion.jpg",
+        "libros": [
+            {
+                "encabezado": "Cien años de soledad",
+                "autor": "Gabriel García Márquez",
+                "pdf": "pdf/ficcion/cien_años_de_soledad.pdf"
+            },
+            {
+                "encabezado": "Ficciones",
+                "autor": "Jorge Luis Borges",
+                "pdf": "pdf/ficcion/ficciones.pdf"
+            },
+            {
+                "encabezado": "La ciudad y los perros",
+                "autor": "Mario Vargas Llosa",
+                "pdf": "pdf/ficcion/la_ciudad_y_los_perros.pdf"
+            },
+            {
+                "encabezado": "Rayuela",
+                "autor": "Julio Cortázar",
+                "pdf": "pdf/ficcion/rayuela.pdf"
+            },
+            {
+                "encabezado": "El entenado",
+                "autor": "Juan José Saer",
+                "pdf": "pdf/ficcion/el_entenado.pdf"
+            },
+            {
+                "encabezado": "La casa de los espíritus",
+                "autor": "Isabel Allende",
+                "pdf": "pdf/ficcion/la_casa_de_los_espiritus.pdf"
+            }
+        ]
+    },
+    {
+        "genero": "Romántico",
+        "imagen": "img/categorias/romantico.jpg",
+        "libros": [
+            {
+                "encabezado": "Como agua para chocolate",
+                "autor": "Laura Esquivel",
+                "pdf": "pdf/romantico/como_agua_para_chocolate.pdf"
+            },
+            {
+                "encabezado": "Dime quién soy",
+                "autor": "Julia Navarro",
+                "pdf": "pdf/romantico/dime_quien_soy.pdf"
+            },
+            {
+                "encabezado": "El príncipe de la niebla",
+                "autor": "Carlos Ruiz Zafón",
+                "pdf": "pdf/romantico/el_principe_de_la_niebla.pdf"
+            },
+            {
+                "encabezado": "Paula",
+                "autor": "Isabel Allende",
+                "pdf": "pdf/romantico/paula.pdf"
+            },
+            {
+                "encabezado": "Yo antes de ti",
+                "autor": "Jojo Moyes",
+                "pdf": "pdf/romantico/yo_antes_de_ti.pdf"
+            },
+            {
+                "encabezado": "El cuaderno de Noah",
+                "autor": "Nicholas Sparks",
+                "pdf": "pdf/romantico/el_cuaderno_de_noah.pdf"
+            }
+        ]
+    },
+    
+    {
+        "genero": "Terror",
+        "imagen": "img/categorias/terror.jpg",
+        "libros": [
+            {
+                "encabezado": "El prisionero del cielo",
+                "autor": "Carlos Ruiz Zafón",
+                "pdf": "pdf/terror/el_prisionero_del_cielo.pdf"
+            },
+            {
+                "encabezado": "El rostro del mal",
+                "autor": "Pedro Fernández",
+                "pdf": "pdf/terror/terror.pdf"
+            },
+            {
+                "encabezado": "El viajero del siglo",
+                "autor": "Andrés Neuman",
+                "pdf": "pdf/terror/terror.pdf"
+            },
+            {
+                "encabezado": "La última casa a la izquierda",
+                "autor": "Héctor Cárdenas",
+                "pdf": "pdf/terror/terror.pdf"
+            },
+            {
+                "encabezado": "El bosque de los árboles muertos",
+                "autor": "Paco Gómez Escribano",
+                "pdf": "pdf/terror/terror.pdf"
+            },
+            {
+                "encabezado": "It",
+                "autor": "Stephen King",
+                "pdf": "pdf/terror/.pdf"
+            }
+        ]
+    },
+    {
+        "genero": "Literatura Clásica",
+        "imagen": "img/categorias/literatura_clasica.jpg",
+        "libros": [
+            {
+                "encabezado": "Don Quijote de la Mancha",
+                "autor": "Miguel de Cervantes",
+                "pdf": "pdf/literatura_clasica/don_quijote_de_la_mancha.pdf"
+            },
+            {
+                "encabezado": "Bodas de sangre",
+                "autor": "Federico García Lorca",
+                "pdf": "pdf/literatura_clasica/.pdf"
+            },
+            {
+                "encabezado": "Ismaelillo",
+                "autor": "José Martí",
+                "pdf": "pdf/literatura_clasica/bodas_de_sangre.pdf"
+            },
+            {
+                "encabezado": "Campos de Castilla",
+                "autor": "Antonio Machado",
+                "pdf": "pdf/literatura_clasica/campos_de_castilla.pdf"
+            },
+            {
+                "encabezado": "Visión de Anáhuac",
+                "autor": "Alfonso Reyes",
+                "pdf": "pdf/literatura_clasica/vision_de_anahuac.pdf"
+            },
+            {
+                "encabezado": "Carta atenagórica",
+                "autor": "Sor Juana Ibarra de la Cruz",
+                "pdf": "pdf/literatura_clasica/carta_atenagorica.pdf"
+            }
+        ]
+    },
+    {
+        "genero": "Cuentos",
+        "imagen": "img/categorias/cuentos.jpg",
+        "libros": [
+            {
+                "encabezado": "Cuentos de la selva",
+                "autor": "Horacio Quiroga",
+                "pdf": "pdf/cuentos/cuentos_de_la_selva.pdf"
+            },
+            {
+                "encabezado": "El Aleph",
+                "autor": "Jorge Luis Borges",
+                "pdf": "pdf/cuentos/el_aleph.pdf"
+            },
+            {
+                "encabezado": "Cuentos completos",
+                "autor": "Edgar Allan Poe",
+                "pdf": "pdf/cuentos/cuentos_completos.pdf"
+            },
+            {
+                "encabezado": "Las cosas que perdimos en el fuego",
+                "autor": "Mariana Enriquez",
+                "pdf": "pdf/cuentos/las_cosas_que_perdimos_en_el_fuego.pdf"
+            },
+            {
+                "encabezado": "El pozo",
+                "autor": "Juan Carlos Onetti",
+                "pdf": "pdf/cuentos/el_pozo.pdf"
+            },
+            {
+                "encabezado": "La casa de Adela",
+                "autor": "Luisa Valenzuela",
+                "pdf": "pdf/cuentos/la_casa_de_adela.pdf"
+            }
+        ]
+    }
+]
 // HEADER Y FOOTER GLOBALES
 const header = document.getElementById("header");
 const footer = document.getElementById("footer");
@@ -32,9 +215,6 @@ const cargarFooter = () => {
     }
 };
 
-// VARIABLES GLOBALES
-let listaLibrosJSON = [];
-
 // VARIABLES DEL DOM
 const contenedorLibros = document.querySelector("#librosContainer");
 const selectGenero = document.querySelector("#selectGenero");
@@ -42,27 +222,9 @@ const selectAutor = document.querySelector("#selectAutor");
 const searchInput = document.querySelector("#searchInput");
 const btnBuscar = document.querySelector("#btnBuscar");
 
-// FUNCIONES DE CARGA DE DATOS
-const cargarDatosJSON = () => {
-    fetch("data/generos.json")
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Error al cargar el JSON: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            listaLibrosJSON = data;
-            cargarGeneros();
-        })
-        .catch((error) => console.error(error));
-};
-
 // FUNCIONES DE RENDERIZADO
 const cargarGeneros = () => {
-    if (!selectGenero) {
-        return;
-    }
+    if (!selectGenero) return;
 
     selectGenero.innerHTML = "<option value=''>Selecciona un género</option>";
     listaLibrosJSON.forEach(({ genero }) => {
@@ -74,23 +236,17 @@ const cargarGeneros = () => {
 };
 
 const cargarAutores = (generoSeleccionado = null) => {
-    if (!selectAutor) {
-        console.error("Select de autores no encontrado.");
-        return;
-    }
+    if (!selectAutor) return;
 
-    // Limpiar el select de autores
     selectAutor.innerHTML = "<option value=''>Selecciona un autor</option>";
     const autoresUnicos = new Set();
 
-    // Filtrar autores según el género seleccionado
     listaLibrosJSON.forEach(({ genero, libros }) => {
         if (!generoSeleccionado || genero === generoSeleccionado) {
             libros.forEach(({ autor }) => autoresUnicos.add(autor));
         }
     });
 
-    // Agregar los autores al select
     autoresUnicos.forEach((autor) => {
         const option = document.createElement("option");
         option.value = autor;
@@ -129,10 +285,10 @@ selectGenero?.addEventListener("change", () => {
     const genero = listaLibrosJSON.find(({ genero }) => genero === generoSeleccionado);
 
     if (genero) {
-        cargarAutores(generoSeleccionado); // Cargar autores según el género seleccionado
-        renderizarLibros(genero.libros, genero.imagen); // Mostrar libros del género
+        cargarAutores(generoSeleccionado);
+        renderizarLibros(genero.libros, genero.imagen); // Pasar la imagen del género
     } else {
-        cargarAutores(); // Mostrar todos los autores si no hay género seleccionado
+        cargarAutores();
         renderizarLibros([]); // Vaciar resultados
     }
 });
@@ -140,17 +296,19 @@ selectGenero?.addEventListener("change", () => {
 selectAutor?.addEventListener("change", () => {
     const autorSeleccionado = selectAutor.value;
 
-    const librosPorAutor = listaLibrosJSON.flatMap(({ libros, imagen }) => {
-        return libros
-            .filter(({ autor }) => autor === autorSeleccionado)
-            .map((libro) => ({ ...libro, imagen })); // Incluye la imagen del género
+    // Encuentra el género relacionado con el autor seleccionado
+    let librosPorAutor = [];
+    let generoImagen = "";
+
+    listaLibrosJSON.forEach(({ genero, libros, imagen }) => {
+        const librosFiltrados = libros.filter(({ autor }) => autor === autorSeleccionado);
+        if (librosFiltrados.length > 0) {
+            librosPorAutor = librosFiltrados;
+            generoImagen = imagen; // Guarda la imagen del género correspondiente
+        }
     });
 
-    if (librosPorAutor.length > 0) {
-        renderizarLibros(librosPorAutor, librosPorAutor[0].imagen); // Usar la imagen del primer libro
-    } else {
-        renderizarLibros([]);
-    }
+    renderizarLibros(librosPorAutor, generoImagen); // Pasar la imagen del género
 });
 
 btnBuscar?.addEventListener("click", () => {
@@ -166,18 +324,22 @@ btnBuscar?.addEventListener("click", () => {
         return;
     }
 
-    const librosEncontrados = listaLibrosJSON.flatMap(({ libros, imagen }) =>
-        libros
-            .filter(
-                ({ encabezado, autor }) =>
-                    encabezado.toLowerCase().includes(searchText) ||
-                    autor.toLowerCase().includes(searchText)
-            )
-            .map((libro) => ({ ...libro, imagen })) // Agrega la imagen del género al libro
-    );
+    let librosEncontrados = [];
+    let generoImagen = "";
+
+    listaLibrosJSON.forEach(({ libros, imagen }) => {
+        const librosFiltrados = libros.filter(
+            ({ encabezado, autor }) =>
+                encabezado.toLowerCase().includes(searchText) || autor.toLowerCase().includes(searchText)
+        );
+        if (librosFiltrados.length > 0) {
+            librosEncontrados = librosFiltrados;
+            generoImagen = imagen; // Usa la imagen del género relacionado
+        }
+    });
 
     if (librosEncontrados.length > 0) {
-        renderizarLibros(librosEncontrados, librosEncontrados[0].imagen); // Usa la imagen del primer resultado
+        renderizarLibros(librosEncontrados, generoImagen); // Mostrar libros con la imagen correcta
     } else {
         Swal.fire({
             icon: "error",
@@ -188,10 +350,9 @@ btnBuscar?.addEventListener("click", () => {
     }
 });
 
-
 // INICIALIZACIÓN
 document.addEventListener("DOMContentLoaded", () => {
     cargarHeader();
     cargarFooter();
-    cargarDatosJSON();
+    cargarGeneros();
 });
