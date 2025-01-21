@@ -28,94 +28,107 @@ const cargarFooter = () => {
     }
 };
 
-// TRIVIA LÓGICA
-const triviaContainer = document.getElementById('triviaContainer');
+// 3) LUDO TRIVIA
+const ludo = () => {
+    let niveles;
+    do {
+        niveles = prompt(`Seleccione una opción:
+        1. Nivel Fácil
+        2. Nivel Intermedio
+        3. Nivel Difícil
+        4. Volver al menú principal`);
 
-const preguntasFacil = [
-    { pregunta: "¿Quién escribió Cien años de soledad?", opciones: ["Gabriel García Márquez", "Mario Vargas Llosa", "Carlos Fuentes", "Julio Cortázar"], respuesta: "Gabriel García Márquez" },
-    { pregunta: "¿Quién escribió la novela Rayuela?", opciones: ["Mario Vargas Llosa", "Julio Cortázar", "Jorge Luis Borges", "Isabel Allende"], respuesta: "Julio Cortázar" },
-    { pregunta: "¿De qué autor es La casa de los espíritus?", opciones: ["Laura Esquivel", "Isabel Allende", "Carlos Ruiz Zafón", "José Martí"], respuesta: "Isabel Allende" },
-];
-
-const preguntasIntermedio = [
-    { pregunta: "¿Qué obra escribió La muerte de Artemio Cruz?", opciones: ["Mario Vargas Llosa", "Carlos Fuentes", "Juan José Saer", "Ricardo Piglia"], respuesta: "Carlos Fuentes" },
-    { pregunta: "¿En qué novela aparece el personaje Fermín Romero de Torres?", opciones: ["La sombra del viento", "El juego del ángel", "La ciudad de los prodigios", "Rayuela"], respuesta: "La sombra del viento" },
-    { pregunta: "¿Quién escribió Artificial respiración?", opciones: ["Ricardo Piglia", "Mario Vargas Llosa", "Juan José Saer", "Carlos Fuentes"], respuesta: "Ricardo Piglia" },
-];
-
-const preguntasDificil = [
-    { pregunta: "¿Qué obra de Jorge Luis Borges contiene la famosa historia 'El jardín de los senderos que se bifurcan'?", opciones: ["Ficciones", "El Aleph", "Poeta en Nueva York", "Los Heraldos Negros"], respuesta: "Ficciones" },
-    { pregunta: "¿Quién escribió Las cosas que perdimos en el fuego?", opciones: ["Mariana Enriquez", "Luisa Valenzuela", "Roberto Arlt", "César Vallejo"], respuesta: "Mariana Enriquez" },
-    { pregunta: "¿Quién es el autor de El prisionero del cielo?", opciones: ["Mario Mendoza", "Carlos Ruiz Zafón", "Juan Carlos Onetti", "José M.ª Guelbenzu"], respuesta: "Carlos Ruiz Zafón" },
-];
-
-let currentQuestionIndex = 0;
-let score = 0;
-let currentLevel = [];
-
-const startTrivia = () => {
-    currentQuestionIndex = 0;
-    score = 0;
-    selectLevel();
+        switch (niveles) {
+            case '1':
+                nivelFacil();
+                break;
+            case '2':
+                nivelIntermedio();
+                break;
+            case '3':
+                nivelDificil();
+                break;
+            case '4':
+                mostrarMenu();
+                return;
+            default:
+                alert("Opción no válida. Intente de nuevo.");
+        }
+    } while (option !== '4');
 };
 
-const selectLevel = () => {
-    triviaContainer.innerHTML = `
-        <h2>Selecciona un nivel</h2>
-        <button class="btn" onclick="startLevel(preguntasFacil)">Fácil</button>
-        <button class="btn" onclick="startLevel(preguntasIntermedio)">Intermedio</button>
-        <button class="btn" onclick="startLevel(preguntasDificil)">Difícil</button>
-    `;
+const nivelFacil = () => {
+    const preguntas = [
+        { pregunta: "¿Quién escribió Cien años de soledad?", opciones: ["A) Gabriel García Márquez", "B) Mario Vargas Llosa", "C) Carlos Fuentes", "D) Julio Cortázar"], respuesta: "A" },
+        { pregunta: "¿Quién escribió la novela Rayuela?", opciones: ["A) Mario Vargas Llosa", "B) Julio Cortázar", "C) Jorge Luis Borges", "D) Isabel Allende"], respuesta: "B" },
+        { pregunta: "¿De qué autor es La casa de los espíritus?", opciones: ["A) Laura Esquivel", "B) Isabel Allende", "C) Carlos Ruiz Zafón", "D) José Martí"], respuesta: "B" },
+        { pregunta: "¿Qué novela es famosa por la frase 'el coronel no tiene quien le escriba'?", opciones: ["A) Crónica de una muerte anunciada", "B) El coronel no tiene quien le escriba", "C) La ciudad y los perros", "D) Ficciones"], respuesta: "B" },
+        { pregunta: "¿Quién escribió La sombra del viento?", opciones: ["A) Carlos Ruiz Zafón", "B) Laura Gallego", "C) Jorge Luis Borges", "D) Mario Mendoza"], respuesta: "A" },
+    ];
+    jugarNivel(preguntas);
 };
 
-const startLevel = (preguntas) => {
-    currentLevel = preguntas;
-    loadQuestion();
+const nivelIntermedio = () => {
+    const preguntas = [
+        { pregunta: "¿Qué obra escribió La muerte de Artemio Cruz?", opciones: ["A) Mario Vargas Llosa", "B) Carlos Fuentes", "C) Juan José Saer", "D) Ricardo Piglia"], respuesta: "B" },
+        { pregunta: "¿En qué novela aparece el personaje Fermín Romero de Torres?", opciones: ["A) La sombra del viento", "B) El juego del ángel", "C) La ciudad de los prodigios", "D) Rayuela"], respuesta: "B" },
+        { pregunta: "¿Quién escribió Artificial respiración?", opciones: ["A) Ricardo Piglia", "B) Mario Vargas Llosa", "C) Juan José Saer", "D) Carlos Fuentes"], respuesta: "A" },
+        { pregunta: "¿Cuál de estos autores escribió El misterio de la cripta embrujada?", opciones: ["A) Mario Mendoza", "B) José Carlos Somoza", "C) Juan Gómez-Jurado", "D) Carlos Ruiz Zafón"], respuesta: "A" },
+        { pregunta: "¿Qué novela de Laura Esquivel explora la cultura mexicana?", opciones: ["A) Como agua para chocolate", "B) Paula", "C) La madre de Frankenstein", "D) La estrella más brillante"], respuesta: "A" },
+    ];
+    jugarNivel(preguntas);
 };
 
-const loadQuestion = () => {
-    const preguntaActual = currentLevel[currentQuestionIndex];
-
-    triviaContainer.innerHTML = `
-        <div class="question">${preguntaActual.pregunta}</div>
-        <div class="options">
-            ${preguntaActual.opciones.map((opcion, index) => `
-                <button class="btn" onclick="checkAnswer('${opcion}', '${preguntaActual.respuesta}')">${opcion}</button>
-            `).join('')}
-        </div>
-    `;
+const nivelDificil = () => {
+    const preguntas = [
+        { pregunta: "¿Qué obra de Jorge Luis Borges contiene la famosa historia 'El jardín de los senderos que se bifurcan'?", opciones: ["A) Ficciones", "B) El Aleph", "C) Poeta en Nueva York", "D) Los Heraldos Negros"], respuesta: "A" },
+        { pregunta: "¿Quién escribió Las cosas que perdimos en el fuego?", opciones: ["A) Mariana Enriquez", "B) Luisa Valenzuela", "C) Roberto Arlt", "D) César Vallejo"], respuesta: "A" },
+        { pregunta: "¿Quién es el autor de El prisionero del cielo?", opciones: ["A) Mario Mendoza", "B) Carlos Ruiz Zafón", "C) Juan Carlos Onetti", "D) José M.ª Guelbenzu"], respuesta: "B" },
+        { pregunta: "¿Quién escribió Cuentos completos que incluye relatos como 'El gato negro'?", opciones: ["A) Edgar Allan Poe", "B) Juan José Saer", "C) José Martí", "D) Mariana Enriquez"], respuesta: "A" },
+        { pregunta: "¿En qué obra de Borges se abordan temas como el infinito y el tiempo?", opciones: ["A) Ficciones", "B) El Aleph", "C) La casa de los espíritus", "D) La sombra del viento"], respuesta: "A" },
+    ];
+    jugarNivel(preguntas);
 };
 
-const checkAnswer = (respuestaUsuario, respuestaCorrecta) => {
-    if (respuestaUsuario === respuestaCorrecta) {
-        score += 4;
-        alert("¡Correcto!");
-    } else {
-        alert(`Incorrecto. La respuesta correcta era: ${respuestaCorrecta}`);
-    }
+const jugarNivel = (preguntas) => {
+    let puntaje = 0;
 
-    currentQuestionIndex++;
+    preguntas.forEach((pregunta, index) => {
+        let respuestaUsuario;
+        do {
+            respuestaUsuario = prompt(`Pregunta ${index + 1}:
+${pregunta.pregunta}
+${pregunta.opciones.join('\n')}`);
+            if (respuestaUsuario === null) {
+                alert("Debes ingresar una respuesta para continuar.");
+            }
+        } while (respuestaUsuario === null || respuestaUsuario.trim() === "");
 
-    if (currentQuestionIndex < currentLevel.length) {
-        loadQuestion();
-    } else {
-        endTrivia();
-    }
+        if (respuestaUsuario?.toUpperCase() === pregunta.respuesta) {
+            alert("¡Correcto!");
+            puntaje += 4;
+        } else {
+            alert(Incorrecto. La respuesta correcta era: ${pregunta.respuesta});
+        }
+    });
+
+    alert(Puntaje final: ${puntaje}/20);
+
+    let opcionFinal;
+    do {
+        opcionFinal = prompt(`Seleccione una opción:
+        1. Volver a intentar
+        2. Volver a seleccionar nivel`);
+
+        switch (opcionFinal) {
+            case '1':
+                jugarNivel(preguntas);
+                break;
+            case '2':
+                ludo();
+                break;
+            default:
+                alert("Opción no válida. Intente de nuevo.");
+        }
+    } while (!['1', '2'].includes(opcionFinal));
 };
-
-const endTrivia = () => {
-    triviaContainer.innerHTML = `
-        <h2>¡Trivia finalizada!</h2>
-        <p>Puntaje final: ${score}/${currentLevel.length * 4}</p>
-        <button class="btn" onclick="startLevel(currentLevel)">Volver a jugar</button>
-        <button class="btn" onclick="selectLevel()">Volver a seleccionar nivel</button>
-    `;
-};
-
-// Cargar header y footer al iniciar
-cargarHeader();
-cargarFooter();
-
-// Iniciar trivia
-startTrivia();
-
