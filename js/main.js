@@ -61,7 +61,6 @@ const cargarDatosJSON = () => {
 // FUNCIONES DE RENDERIZADO
 const cargarGeneros = () => {
     if (!selectGenero) {
-        console.error("Select de géneros no encontrado.");
         return;
     }
 
