@@ -161,86 +161,75 @@ const mostrarLibros = (libros, imagen) => {
         librosContainer.appendChild(card);
     });
 };
+// Verificar si estamos en la página de categorías
+if (librosContainer) {
+    // Filtrar libros por género seleccionado y guardar la selección en localStorage.
+    selectGenero.addEventListener("change", () => {
+        const generoSeleccionado = selectGenero.value;
+        const genero = generosLiterarios.find(({ genero }) => genero === generoSeleccionado);
 
+        if (genero) {
+            mostrarLibros(genero.libros, genero.imagen);
+            localStorage.setItem("ultimoGenero", JSON.stringify(generoSeleccionado));
+            cargarAutores(generoSeleccionado); // Cargar solo los autores de este género.
+        }
+    });
 
-//funcion flechaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-// Filtrar libros por género seleccionado y guardar la selección en localStorage.
-selectGenero.addEventListener("change", () => {
-    const generoSeleccionado = selectGenero.value; // Se utiliza directamente `selectGenero.value` dentro de la función flecha
-    const genero = generosLiterarios.find(({ genero }) => genero === generoSeleccionado);
+    // Filtrar libros por autor seleccionado
+    selectAutor.addEventListener("change", () => {
+        const autorSeleccionado = selectAutor.value;
+        const librosPorAutor = generosLiterarios.flatMap(({ libros }) => libros)
+            .filter(({ autor }) => autor === autorSeleccionado);
 
-    if (genero) {
-        mostrarLibros(genero.libros, genero.imagen);
-        localStorage.setItem("ultimoGenero", JSON.stringify(generoSeleccionado));
-        cargarAutores(generoSeleccionado); // Cargar solo los autores de este género.
-    }
-});
+        if (librosPorAutor.length > 0) {
+            const generoEncontrado = generosLiterarios.find(({ libros }) =>
+                libros.some(({ autor }) => autor === autorSeleccionado)
+            );
+            mostrarLibros(librosPorAutor, generoEncontrado.imagen);
+        } else {
+            librosContainer.innerHTML = `<p class="no-libros">No hay libros disponibles.</p>`;
+        }
+    });
 
-// Filtrar libros por autor seleccionado
-selectAutor.addEventListener("change", () => {
-    const autorSeleccionado = selectAutor.value; // Igual que arriba, usamos directamente `selectAutor.value`
-    const librosPorAutor = generosLiterarios.flatMap(({ libros }) => libros)
-        .filter(({ autor }) => autor === autorSeleccionado);
+    // Botón de búsqueda
+    btnBuscar.addEventListener("click", () => {
+        const searchText = searchInput.value.trim().toLowerCase();
 
-    if (librosPorAutor.length > 0) {
-        const generoEncontrado = generosLiterarios.find(({ libros }) =>
-            libros.some(({ autor }) => autor === autorSeleccionado)
-        );
-        mostrarLibros(librosPorAutor, generoEncontrado.imagen);
-    } else {
-        librosContainer.innerHTML = `<p class="no-libros">No hay libros disponibles.</p>`;
-    }
-});
+        if (searchText === "") {
+            Swal.fire({
+                icon: "warning",
+                title: "Campo vacío",
+                text: "Por favor, ingrese un título o autor para buscar.",
+                confirmButtonColor: "#d33"
+            });
+            return;
+        }
 
-// Boton de busqueda
-// Buscar libros por texto en el encabezado o autor utilizando JSON
-btnBuscar.addEventListener("click", () => {
-    const searchText = searchInput.value.trim().toLowerCase();
-
-    if (searchText === "") {
-        // 🔹 Muestra una alerta si el usuario da click sin escribir nada
-        Swal.fire({
-            icon: "warning",
-            title: "Campo vacío",
-            text: "Por favor, ingrese un título o autor para buscar.",
-            confirmButtonColor: "#d33"
-        });
-        return;
-    }
-
-    const librosEncontrados = generosLiterarios.flatMap(({ libros }) => libros)
-        .filter(({ encabezado, autor }) => 
-            encabezado.toLowerCase().includes(searchText) || 
-            autor.toLowerCase().includes(searchText)
-        );
-
-    if (librosEncontrados.length > 0) {
-        const generoEncontrado = generosLiterarios.find(({ libros }) =>
-            libros.some(({ encabezado, autor }) => 
-                encabezado.toLowerCase().includes(searchText) || 
+        const librosEncontrados = generosLiterarios.flatMap(({ libros }) => libros)
+            .filter(({ encabezado, autor }) =>
+                encabezado.toLowerCase().includes(searchText) ||
                 autor.toLowerCase().includes(searchText)
-            )
-        );
-        mostrarLibros(librosEncontrados, generoEncontrado.imagen);
-    } else {
-        Swal.fire({
-            icon: "error",
-            title: "No encontrado",
-            text: "El libro o autor no está disponible.",
-            confirmButtonColor: "#d33"
-        });
-    }
-});
+            );
 
-// Al cargar la página de Categorías, reiniciamos los selectores y limpiamos la pantalla.
-window.addEventListener("pageshow", () => {
-    selectGenero.value = "";
-    selectAutor.innerHTML = "<option value=''>Seleccione un autor</option>";
-    searchInput.value = "";
-    librosContainer.innerHTML = "";
-    localStorage.removeItem("ultimoGenero"); // Elimina la última búsqueda guardada
-});
+        if (librosEncontrados.length > 0) {
+            const generoEncontrado = generosLiterarios.find(({ libros }) =>
+                libros.some(({ encabezado, autor }) =>
+                    encabezado.toLowerCase().includes(searchText) ||
+                    autor.toLowerCase().includes(searchText)
+                )
+            );
+            mostrarLibros(librosEncontrados, generoEncontrado.imagen);
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "No encontrado",
+                text: "El libro o autor no está disponible.",
+                confirmButtonColor: "#d33"
+            });
+        }
+    });
+}
 cargarGeneros();
 cargarAutores();
 
-//SECCIÓN 3) LUDO TRIVIA-------FALTA REALIZAR
+
