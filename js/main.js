@@ -1,9 +1,8 @@
 //HEADER Y FOOTER APTO PARA TODAS LAS SECCIONES HOME/CATEGORIAS/LUDOTRIVIA-------------------------------------
-//USO DE DOM
-// OBTENIENDO ELEMENTOS
+// USO DEL DOM para acceder a los elementos del encabezado y pie de página.
 const header = document.getElementById("header");
 const footer = document.getElementById("footer");
-//HEADER(ENCABEZADO)
+// HEADER (Encabezado): Función que inserta dinámicamente el contenido del encabezado.
 const cargarHeader = () => {
     if (header) {
         header.innerHTML = `
@@ -23,7 +22,7 @@ const cargarHeader = () => {
         `;
     }
 };
-//FOOTER(PIE DE PAGINA)
+// FOOTER (Pie de página): Función que inserta dinámicamente el contenido del pie de página
 const cargarFooter = () => {
     if (footer) {
         footer.innerHTML = `<p> Leydy Jaico - 2025 </p>`;
@@ -36,9 +35,7 @@ cargarFooter();
 
 //2) SOLAMENTE PARA LA SECCION DE CATEGORIAS---------------------------------
 //USO DEL DOM, EVENTOS, LOCAL STORAGE Y JSON
-// DATOS DE LIBROS
-//Almacenamos la información del libro en un array de objetos
-//Estructura de datos JSON
+// Almacenamos la información de los géneros literarios y sus libros en un array de objetos con estructura JSON
 const generosLiterarios=[
     {
         genero : "Ficción",
@@ -104,14 +101,13 @@ const generosLiterarios=[
         ]
     },
 ];
-// OBTENIENDO ELEMENTOS DOM COMO:
-//seleccionar genero, autor, prompt para buscar y el botos de busqueda
+// Accedemos a elementos del DOM como el selector de género, autor, barra de búsqueda y botón de búsqueda.
 const selectGenero = document.getElementById("selectGenero");
 const selectAutor = document.getElementById("selectAutor");
 const searchInput = document.getElementById("searchInput");
 const btnBuscar = document.getElementById("btnBuscar");
 const librosContainer = document.getElementById("librosContainer");
-// Genero
+// Función para elegir los géneros literarios en un select
 const cargarGeneros = () => {
     generosLiterarios.forEach(({ genero }) => {
         const option = document.createElement("option");
@@ -120,10 +116,10 @@ const cargarGeneros = () => {
         selectGenero.appendChild(option);
     });
 };
-// Autor
+// Función para cargar los autores según el género seleccionado
 const cargarAutores = (generoSeleccionado = null) => {
-    selectAutor.innerHTML = "<option value=''>Seleccione un autor</option>";
-    const autoresUnicos = new Set();
+    selectAutor.innerHTML = "<option value=''>Seleccione un autor</option>"; 
+    const autoresUnicos = new Set(); 
 
     const generosFiltrados = generoSeleccionado
         ? generosLiterarios.filter(({ genero }) => genero === generoSeleccionado)
@@ -141,7 +137,7 @@ const cargarAutores = (generoSeleccionado = null) => {
     });
 };
 
-//Mostrando los libros si es que hay o no para poder acceder
+// Función para mostrar los libros disponibles según la selección
 const mostrarLibros = (libros, imagen) => {
     librosContainer.innerHTML = "";
 
@@ -159,28 +155,30 @@ const mostrarLibros = (libros, imagen) => {
             <h3>${encabezado}</h3>
             <p>${autor}</p>
         `;
-
+        //Usando Evento
+        //Al hacer clic en una tarjeta, se abre el PDF en una nueva pestaña.
         card.addEventListener("click", () => window.open(pdf, "_blank"));
         librosContainer.appendChild(card);
     });
 };
 
-// Filtrando por genero
-//Usando local Storage
-selectGenero.addEventListener("change", function () {
-    const generoSeleccionado = this.value;
+
+//funcion flechaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+// Filtrar libros por género seleccionado y guardar la selección en localStorage.
+selectGenero.addEventListener("change", () => {
+    const generoSeleccionado = selectGenero.value; // Se utiliza directamente `selectGenero.value` dentro de la función flecha
     const genero = generosLiterarios.find(({ genero }) => genero === generoSeleccionado);
-    
+
     if (genero) {
         mostrarLibros(genero.libros, genero.imagen);
         localStorage.setItem("ultimoGenero", JSON.stringify(generoSeleccionado));
-        cargarAutores(generoSeleccionado); // 🔹 Cargar solo los autores de este género
+        cargarAutores(generoSeleccionado); // Cargar solo los autores de este género.
     }
 });
 
-//Falta comentar
-selectAutor.addEventListener("change", function () {
-    const autorSeleccionado = this.value;
+// Filtrar libros por autor seleccionado
+selectAutor.addEventListener("change", () => {
+    const autorSeleccionado = selectAutor.value; // Igual que arriba, usamos directamente `selectAutor.value`
     const librosPorAutor = generosLiterarios.flatMap(({ libros }) => libros)
         .filter(({ autor }) => autor === autorSeleccionado);
 
@@ -195,7 +193,7 @@ selectAutor.addEventListener("change", function () {
 });
 
 // Boton de busqueda
-//uso de eventos y json
+// Buscar libros por texto en el encabezado o autor utilizando JSON
 btnBuscar.addEventListener("click", () => {
     const searchText = searchInput.value.trim().toLowerCase();
 
@@ -234,19 +232,15 @@ btnBuscar.addEventListener("click", () => {
     }
 });
 
-// 📌 Reiniciar la pantalla al entrar en Categorías
+// Al cargar la página de Categorías, reiniciamos los selectores y limpiamos la pantalla.
 window.addEventListener("pageshow", () => {
     selectGenero.value = "";
     selectAutor.innerHTML = "<option value=''>Seleccione un autor</option>";
     searchInput.value = "";
     librosContainer.innerHTML = "";
-    localStorage.removeItem("ultimoGenero"); // Eliminar última búsqueda guardada
+    localStorage.removeItem("ultimoGenero"); // Elimina la última búsqueda guardada
 });
-
-// 📌 Cargar contenido inicial
 cargarGeneros();
 cargarAutores();
 
-
-
-
+//SECCIÓN 3) LUDO TRIVIA-------FALTA REALIZAR
