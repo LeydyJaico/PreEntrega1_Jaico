@@ -67,7 +67,7 @@ nav .menu li a:hover {
     align-items: center;
     flex-direction: column;
     padding: 20px;
-    background: url("img/home.jpg.jpg") center/cover no-repeat;
+    background: url("img/home.jpg") center/cover no-repeat;
 }
 
 .home .descripcion {

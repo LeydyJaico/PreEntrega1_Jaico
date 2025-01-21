@@ -1,8 +1,7 @@
-//HEADER Y FOOTER APTO PARA TODAS LAS SECCIONES HOME/CATEGORIAS/LUDOTRIVIA-------------------------------------
-// USO DEL DOM para acceder a los elementos del encabezado y pie de página.
+// HEADER Y FOOTER GLOBALES
 const header = document.getElementById("header");
 const footer = document.getElementById("footer");
-// HEADER (Encabezado): Función que inserta dinámicamente el contenido del encabezado.
+
 const cargarHeader = () => {
     if (header) {
         header.innerHTML = `
@@ -20,116 +19,80 @@ const cargarHeader = () => {
                 </nav>
             </div>
         `;
+    } else {
+        console.error("Header no encontrado. Verifica el HTML.");
     }
 };
-// FOOTER (Pie de página): Función que inserta dinámicamente el contenido del pie de página
+
 const cargarFooter = () => {
     if (footer) {
-        footer.innerHTML = `<p> Leydy Jaico - 2025 </p>`;
+        footer.innerHTML = `<p>Leydy Jaico - 2025</p>`;
+    } else {
+        console.error("Footer no encontrado. Verifica el HTML.");
     }
 };
-cargarHeader();
-cargarFooter();
 
+// VARIABLES GLOBALES
+let listaLibrosJSON = [];
 
+// VARIABLES DEL DOM
+const contenedorLibros = document.querySelector("#librosContainer");
+const selectGenero = document.querySelector("#selectGenero");
+const selectAutor = document.querySelector("#selectAutor");
+const searchInput = document.querySelector("#searchInput");
+const btnBuscar = document.querySelector("#btnBuscar");
 
-//2) SOLAMENTE PARA LA SECCION DE CATEGORIAS---------------------------------
-//USO DEL DOM, EVENTOS, LOCAL STORAGE Y JSON
-// Almacenamos la información de los géneros literarios y sus libros en un array de objetos con estructura JSON
-const generosLiterarios=[
-    {
-        genero : "Ficción",
-        imagen:"img/categorias/ficcion.jpg",
-        libros : [
-            {encabezado:"Cien años de soledad",autor: "Gabriel García Márquez", pdf: "pdf/ficcion/cien_años_de_soledad.pdf"},
-            {encabezado:"Ficciones",autor: "Jorge Luis Borges", pdf: "pdf/ficcion/.ficciones.pdf"},
-            {encabezado:"La ciudad y los perros", autor: "Mario Vargas Llosa", pdf: "pdf/ficcion/la_ciudad_y_los_perros.pdf"},
-            {encabezado:"Rayuela", autor: "Julio Cortázar", pdf: "pdf/ficcion/rayuela.pdf"},
-            {encabezado:"El entenado", autor: "Juan José Saer", pdf: "pdf/ficcion/el_entenado.pdf"},
-            {encabezado:"La casa de los espíritus", autor: "Isabel Allende", pdf: "pdf/ficcion/la_casa_de_los_espiritus.pdf"},
-        ]
-    },
+// FUNCIONES DE CARGA DE DATOS
+const cargarDatosJSON = () => {
+    fetch("data/generos.json")
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Error al cargar el JSON: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            listaLibrosJSON = data;
+            cargarGeneros();
+        })
+        .catch((error) => console.error(error));
+};
 
-    {
-        genero : "Romántico",
-        imagen:"img/categorias/romantico.jpg",
-        libros : [
-            {encabezado:"Como agua para chocolate", autor: "Laura Esquivel", pdf: "pdf/romantico/como_agua_para_chocolate.pdf"},
-            {encabezado:"Dime quién soy", autor: "Julia Navarro", pdf: "pdf/romantico/dime_quien_soy.pdf"},
-            {encabezado:"El príncipe de la niebla", autor: "Carlos Ruiz Zafón" , pdf: "pdf/romantico/el_principe_de_la_niebla.pdf"},
-            {encabezado:" Paula", autor: "Isabel Allende", pdf: "pdf/romantico/paula.pdf"},
-            {encabezado:"Yo antes de ti", autor: "Jojo Moyes ", pdf: "pdf/romantico/yo_antes_de_ti.pdf"},
-            {encabezado:" El cuaderno de Noah ", autor: "Nicholas Sparks", pdf: "pdf/romantico/el_cuaderno_de_noah.pdf"},
-        ]
-    },
-    
-    {
-        genero : "Terror",
-        imagen:"img/categorias/terror.jpg",
-        libros : [
-            {encabezado:"El prisionero del cielo", autor: "Carlos Ruiz Zafón", pdf: "pdf/terror/el_prisionero_del_cielo.pdf"},
-            {encabezado:"El rostro del mal", autor: "Pedro Fernández", pdf: "pdf/terror/terror.pdf"},
-            {encabezado:"El viajero del siglo", autor: "Andrés Neuman", pdf: "pdf/terror/terror.pdf"},
-            {encabezado:"La última casa a la izquierda", autor: "Héctor Cárdenas", pdf: "pdf/terror/terror.pdf"},
-            {encabezado:"El bosque de los árboles muertos", autor: "Paco Gómez Escribano", pdf: "pdf/terror/terror.pdf"},
-            {encabezado:"It", autor: "Stephen King", pdf: "pdf/terror/.pdf"},
-        ]
-    },
-    
-    {
-        genero : "Literatura Clásica",
-        imagen:"img/categorias/literatura clasica.jpg",
-        libros : [
-            {encabezado:"Don Quijote de la Mancha", autor: "Miguel de Cervantes", pdf: "pdf/literatura_clasica/don_quijote_de_la_mancha.pdf"},
-            {encabezado:"Bodas de sangre", autor: "Federico García Lorca", pdf: "pdf/literatura_clasica/.pdf"},
-            {encabezado:"Ismaelillo", autor: "José Martí", pdf: "pdf/literatura_clasica/bodas_de_sangre.pdf"},
-            {encabezado:"Campos de Castilla", autor: "Antonio Machado", pdf: "pdf/literatura_clasica/campos_de_castilla.pdf"},
-            {encabezado:"Visión de Anáhuac", autor: "Alfonso Reyes", pdf: "pdf/literatura_clasica/vision_de_anahuac.pdf" },
-            {encabezado:"Carta atenagórica", autor: "Sor Juana Ibarra de la Cruz", pdf: "pdf/literatura_clasica/carta_atenagorica.pdf"},
-        ]
-    },
-    {
-        genero : "Cuentos",
-        imagen:"img/categorias/cuentos.jpg",
-        libros : [
-            {encabezado:"Cuentos de la selva", autor: "Horacio Quiroga", pdf: "pdf/cuentos/cuentos_de_la_selva.pdf"},
-            {encabezado:"El Aleph", autor: "Jorge Luis Borges", pdf: "pdf/cuentos/el_aleph.pdf"},
-            {encabezado:"Cuentos completos",autor: "Edgar Allan Poe", pdf: "pdf/cuentos/cuentos_completos.pdf"},
-            {encabezado:"Las cosas que perdimos en el fuego",autor: "Mariana Enriquez", pdf: "pdf/cuentos/las_cosas_que_perdimos_en_el_fuego.pdf"},
-            {encabezado:" El pozo", autor: "Juan Carlos Onetti", pdf: "pdf/cuentos/el_pozo.pdf"},
-            {encabezado:"La casa de Adela", autor: "Luisa Valenzuela", pdf: "pdf/cuentos/la_casa_de_adela.pdf"},
-        ]
-    },
-];
-// Accedemos a elementos del DOM como el selector de género, autor, barra de búsqueda y botón de búsqueda.
-const selectGenero = document.getElementById("selectGenero");
-const selectAutor = document.getElementById("selectAutor");
-const searchInput = document.getElementById("searchInput");
-const btnBuscar = document.getElementById("btnBuscar");
-const librosContainer = document.getElementById("librosContainer");
-// Función para elegir los géneros literarios en un select
+// FUNCIONES DE RENDERIZADO
 const cargarGeneros = () => {
-    generosLiterarios.forEach(({ genero }) => {
+    if (!selectGenero) {
+        console.error("Select de géneros no encontrado.");
+        return;
+    }
+
+    selectGenero.innerHTML = "<option value=''>Selecciona un género</option>";
+    listaLibrosJSON.forEach(({ genero }) => {
         const option = document.createElement("option");
         option.value = genero;
         option.textContent = genero;
         selectGenero.appendChild(option);
     });
 };
-// Función para cargar los autores según el género seleccionado
+
 const cargarAutores = (generoSeleccionado = null) => {
-    selectAutor.innerHTML = "<option value=''>Seleccione un autor</option>"; 
-    const autoresUnicos = new Set(); 
+    if (!selectAutor) {
+        console.error("Select de autores no encontrado.");
+        return;
+    }
 
-    const generosFiltrados = generoSeleccionado
-        ? generosLiterarios.filter(({ genero }) => genero === generoSeleccionado)
-        : generosLiterarios;
+    // Limpiar el select de autores
+    selectAutor.innerHTML = "<option value=''>Selecciona un autor</option>";
+    const autoresUnicos = new Set();
 
-    generosFiltrados.forEach(({ libros }) => {
-        libros.forEach(({ autor }) => autoresUnicos.add(autor));
+    // Filtrar autores según el género seleccionado
+    listaLibrosJSON.forEach(({ genero, libros }) => {
+        if (!generoSeleccionado || genero === generoSeleccionado) {
+            libros.forEach(({ autor }) => autoresUnicos.add(autor));
+        }
     });
 
-    autoresUnicos.forEach(autor => {
+    // Agregar los autores al select
+    autoresUnicos.forEach((autor) => {
         const option = document.createElement("option");
         option.value = autor;
         option.textContent = autor;
@@ -137,12 +100,11 @@ const cargarAutores = (generoSeleccionado = null) => {
     });
 };
 
-// Función para mostrar los libros disponibles según la selección
-const mostrarLibros = (libros, imagen) => {
-    librosContainer.innerHTML = "";
+const renderizarLibros = (libros, generoImagen) => {
+    contenedorLibros.innerHTML = "";
 
     if (libros.length === 0) {
-        librosContainer.innerHTML = `<p class="no-libros">No hay libros disponibles.</p>`;
+        contenedorLibros.innerHTML = `<p class="no-libros">No hay libros disponibles.</p>`;
         return;
     }
 
@@ -150,86 +112,87 @@ const mostrarLibros = (libros, imagen) => {
         const card = document.createElement("div");
         card.classList.add("libro-card");
 
+        const imgSrc = generoImagen || "img/default.jpg"; // Imagen por defecto si no hay imagen del género
         card.innerHTML = `
-            <img src="${imagen}" alt="${encabezado}" class="libro-img">
+            <img src="${imgSrc}" alt="${encabezado}" class="libro-img">
             <h3>${encabezado}</h3>
             <p>${autor}</p>
         `;
-        //Usando Evento
-        //Al hacer clic en una tarjeta, se abre el PDF en una nueva pestaña.
+
         card.addEventListener("click", () => window.open(pdf, "_blank"));
-        librosContainer.appendChild(card);
+        contenedorLibros.appendChild(card);
     });
 };
-// Verificar si estamos en la página de categorías
-if (librosContainer) {
-    // Filtrar libros por género seleccionado y guardar la selección en localStorage.
-    selectGenero.addEventListener("change", () => {
-        const generoSeleccionado = selectGenero.value;
-        const genero = generosLiterarios.find(({ genero }) => genero === generoSeleccionado);
 
-        if (genero) {
-            mostrarLibros(genero.libros, genero.imagen);
-            localStorage.setItem("ultimoGenero", JSON.stringify(generoSeleccionado));
-            cargarAutores(generoSeleccionado); // Cargar solo los autores de este género.
-        }
+// EVENTOS
+selectGenero?.addEventListener("change", () => {
+    const generoSeleccionado = selectGenero.value;
+    const genero = listaLibrosJSON.find(({ genero }) => genero === generoSeleccionado);
+
+    if (genero) {
+        cargarAutores(generoSeleccionado); // Cargar autores según el género seleccionado
+        renderizarLibros(genero.libros, genero.imagen); // Mostrar libros del género
+    } else {
+        cargarAutores(); // Mostrar todos los autores si no hay género seleccionado
+        renderizarLibros([]); // Vaciar resultados
+    }
+});
+
+selectAutor?.addEventListener("change", () => {
+    const autorSeleccionado = selectAutor.value;
+
+    const librosPorAutor = listaLibrosJSON.flatMap(({ libros, imagen }) => {
+        return libros
+            .filter(({ autor }) => autor === autorSeleccionado)
+            .map((libro) => ({ ...libro, imagen })); // Incluye la imagen del género
     });
 
-    // Filtrar libros por autor seleccionado
-    selectAutor.addEventListener("change", () => {
-        const autorSeleccionado = selectAutor.value;
-        const librosPorAutor = generosLiterarios.flatMap(({ libros }) => libros)
-            .filter(({ autor }) => autor === autorSeleccionado);
+    if (librosPorAutor.length > 0) {
+        renderizarLibros(librosPorAutor, librosPorAutor[0].imagen); // Usar la imagen del primer libro
+    } else {
+        renderizarLibros([]);
+    }
+});
 
-        if (librosPorAutor.length > 0) {
-            const generoEncontrado = generosLiterarios.find(({ libros }) =>
-                libros.some(({ autor }) => autor === autorSeleccionado)
-            );
-            mostrarLibros(librosPorAutor, generoEncontrado.imagen);
-        } else {
-            librosContainer.innerHTML = `<p class="no-libros">No hay libros disponibles.</p>`;
-        }
-    });
+btnBuscar?.addEventListener("click", () => {
+    const searchText = searchInput.value.trim().toLowerCase();
 
-    // Botón de búsqueda
-    btnBuscar.addEventListener("click", () => {
-        const searchText = searchInput.value.trim().toLowerCase();
+    if (!searchText) {
+        Swal.fire({
+            icon: "warning",
+            title: "Campo vacío",
+            text: "Por favor, ingrese un título o autor para buscar.",
+            confirmButtonColor: "#d33",
+        });
+        return;
+    }
 
-        if (searchText === "") {
-            Swal.fire({
-                icon: "warning",
-                title: "Campo vacío",
-                text: "Por favor, ingrese un título o autor para buscar.",
-                confirmButtonColor: "#d33"
-            });
-            return;
-        }
-
-        const librosEncontrados = generosLiterarios.flatMap(({ libros }) => libros)
-            .filter(({ encabezado, autor }) =>
-                encabezado.toLowerCase().includes(searchText) ||
-                autor.toLowerCase().includes(searchText)
-            );
-
-        if (librosEncontrados.length > 0) {
-            const generoEncontrado = generosLiterarios.find(({ libros }) =>
-                libros.some(({ encabezado, autor }) =>
+    const librosEncontrados = listaLibrosJSON.flatMap(({ libros, imagen }) =>
+        libros
+            .filter(
+                ({ encabezado, autor }) =>
                     encabezado.toLowerCase().includes(searchText) ||
                     autor.toLowerCase().includes(searchText)
-                )
-            );
-            mostrarLibros(librosEncontrados, generoEncontrado.imagen);
-        } else {
-            Swal.fire({
-                icon: "error",
-                title: "No encontrado",
-                text: "El libro o autor no está disponible.",
-                confirmButtonColor: "#d33"
-            });
-        }
-    });
-}
-cargarGeneros();
-cargarAutores();
+            )
+            .map((libro) => ({ ...libro, imagen })) // Agrega la imagen del género al libro
+    );
+
+    if (librosEncontrados.length > 0) {
+        renderizarLibros(librosEncontrados, librosEncontrados[0].imagen); // Usa la imagen del primer resultado
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "No encontrado",
+            text: "El libro o autor no está disponible.",
+            confirmButtonColor: "#d33",
+        });
+    }
+});
 
 
+// INICIALIZACIÓN
+document.addEventListener("DOMContentLoaded", () => {
+    cargarHeader();
+    cargarFooter();
+    cargarDatosJSON();
+});
