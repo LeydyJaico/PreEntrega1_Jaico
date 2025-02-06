@@ -1,3 +1,46 @@
+// VARIABLES DEL DOM
+const header = document.getElementById("header");
+const footer = document.getElementById("footer");
+const contenedorLibros = document.querySelector("#librosContainer");
+const selectGenero = document.querySelector("#selectGenero");
+const selectAutor = document.querySelector("#selectAutor");
+const searchInput = document.querySelector("#searchInput");
+const btnBuscar = document.querySelector("#btnBuscar");
+
+// CARGAR HEADER Y FOOTER
+const cargarHeader = () => {
+    if (header) {
+        header.innerHTML = `
+            <div class="header-content">
+                <div class="logo">
+                    <img src="img/icono.jpg" alt="Logo de un libro" class="logo-img">
+                    <h1 class="logo-text">Book Glimpse</h1>
+                </div>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categorias.html">Categorías</a></li>
+                        <li><a href="recomendaciones.html">Recomendaciones</a></li>
+                    </ul>
+                </nav>
+            </div>
+        `;
+    } else {
+        console.error("Header no encontrado. Verifica el HTML.");
+    }
+};
+const cargarFooter = () => {
+    if (footer) {
+        footer.innerHTML = `<p>Leydy Jaico - 2025</p>`;
+    } else {
+        console.error("Footer no encontrado. Verifica el HTML.");
+    }
+};
+
+
+// ----------------------------------------------------
+// SECCIÓN CATEGORIAS
+// ----------------------------------------------------
 const listaLibrosJSON=[
     {
         "genero": "Ficción",
@@ -181,48 +224,7 @@ const listaLibrosJSON=[
         ]
     }
 ]
-// HEADER Y FOOTER 
-const header = document.getElementById("header");
-const footer = document.getElementById("footer");
-
-const cargarHeader = () => {
-    if (header) {
-        header.innerHTML = `
-            <div class="header-content">
-                <div class="logo">
-                    <img src="img/icono.jpg" alt="Logo de un libro" class="logo-img">
-                    <h1 class="logo-text">Book Glimpse</h1>
-                </div>
-                <nav>
-                    <ul class="menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categorias.html">Categorías</a></li>
-                        <li><a href="ludotrivia.html">Ludo Trivia</a></li>
-                    </ul>
-                </nav>
-            </div>
-        `;
-    } else {
-        console.error("Header no encontrado. Verifica el HTML.");
-    }
-};
-
-const cargarFooter = () => {
-    if (footer) {
-        footer.innerHTML = `<p>Leydy Jaico - 2025</p>`;
-    } else {
-        console.error("Footer no encontrado. Verifica el HTML.");
-    }
-};
-
-// VARIABLES DEL DOM
-const contenedorLibros = document.querySelector("#librosContainer");
-const selectGenero = document.querySelector("#selectGenero");
-const selectAutor = document.querySelector("#selectAutor");
-const searchInput = document.querySelector("#searchInput");
-const btnBuscar = document.querySelector("#btnBuscar");
-
-// FUNCIONES 
+//FUNCIONES 
 const cargarGeneros = () => {
     if (!selectGenero) return;
 
@@ -279,7 +281,8 @@ const renderizarLibros = (libros, generoImagen) => {
     });
 };
 
-// EVENTOS
+//EVENTOS
+
 selectGenero?.addEventListener("change", () => {
     const generoSeleccionado = selectGenero.value;
     const genero = listaLibrosJSON.find(({ genero }) => genero === generoSeleccionado);
@@ -300,7 +303,7 @@ selectAutor?.addEventListener("change", () => {
     let librosPorAutor = [];
     let generoImagen = "";
 
-    listaLibrosJSON.forEach(({ genero, libros, imagen }) => {
+    listaLibrosJSON.forEach(({ libros, imagen }) => {
         const librosFiltrados = libros.filter(({ autor }) => autor === autorSeleccionado);
         if (librosFiltrados.length > 0) {
             librosPorAutor = librosFiltrados;
@@ -353,4 +356,93 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarHeader();
     cargarFooter();
     cargarGeneros();
+    // Asegúrate de que el elemento exista antes de agregar el eventListener
+    const form = document.getElementById('recomendacionForm');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+            const nombre = document.getElementById('nombre').value;
+            const recomendacion = document.getElementById('recomendacion').value;
+
+            if (nombre.trim() === '' || recomendacion.trim() === '') {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            const recomendacionData = {
+                nombre: nombre,
+                recomendacion: recomendacion,
+                fecha: new Date() // Guardar la fecha de envío
+            };
+
+            let recomendaciones = JSON.parse(localStorage.getItem('recomendaciones')) || [];
+
+
+            const MAX_RECOMENDACIONES = 10;
+            // Limitar las recomendaciones a las últimas MAX_RECOMENDACIONES
+            if (recomendaciones.length >= MAX_RECOMENDACIONES) {
+                recomendaciones.shift(); // Eliminar la recomendación más antigua
+            }
+
+            recomendaciones.push(recomendacionData);
+
+            localStorage.setItem('recomendaciones', JSON.stringify(recomendaciones));
+
+            document.getElementById('respuesta').innerHTML = `<p>¡Gracias, ${nombre}! Tu recomendación ha sido recibida.</p>`;
+            document.getElementById('recomendacionForm').reset();
+
+            // Cargar las recomendaciones actualizadas
+            cargarRecomendaciones();
+        });
+    }
+
+    // Verificar si el elemento para la imagen de la NASA existe antes de intentar modificarlo
+    const nasaImage = document.getElementById('nasa-image');
+    if (nasaImage) {
+        const apiKey = 'fDPqf2atGwbre1rVDpd66yEMFETZfJLjScMwziDV'; 
+        const nasaUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+        fetch(nasaUrl)
+            .then(response => response.json())
+            .then(data => {
+                const imageUrl = data.url;
+                const description = data.explanation;
+                nasaImage.src = imageUrl;
+                document.getElementById('nasa-description').textContent = description;
+            })
+            .catch(error => {
+                console.error('Error al obtener la imagen de la NASA:', error);
+            });
+    }
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    cargarRecomendaciones();
+});
+
+const cargarRecomendaciones = () => {
+    const recomendaciones = JSON.parse(localStorage.getItem('recomendaciones')) || [];
+    const listaRecomendaciones = document.getElementById('listaRecomendaciones');
+
+    if (listaRecomendaciones) {
+        // Limpiar lista
+        listaRecomendaciones.innerHTML = '';
+
+        // Mostrar todas las recomendaciones guardadas
+        recomendaciones.forEach((recomendacion) => {
+            const item = document.createElement('li');
+            item.textContent = `${recomendacion.nombre}: ${recomendacion.recomendacion} (Fecha: ${recomendacion.fecha})`;
+
+            listaRecomendaciones.appendChild(item);
+        });
+    } 
+};
+
+
+// Llama a la función cargarRecomendaciones cuando el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', (event) => {
+    cargarRecomendaciones();
+});
+
+

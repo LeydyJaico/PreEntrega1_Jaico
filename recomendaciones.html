@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones - Book Glimpse</title>
+    <link rel="icon" href="img/icono_inicial.png" >
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header id="header"></header>
+    <div id="book">
+        <main class="recomendaciones">
+            <div class="descripcion">
+                <!-- TITULO DE LA SECCIÓN-->
+                <h1>Informate y explora sobre el Universo y recomiéndanos un libro</h1>
+                <p>¡Disfruta de la imagen más impresionante del día!</p>
+                
+                <!-- NASA- USO DE UNA API PARA ESTA SECCIÓN -->
+                <div id="nasa-image-container">
+                    <img id="nasa-image" src="" alt="Imagen del espacio" style="max-width: 100%; height: auto; border-radius: 10px;">
+                    <p id="nasa-description" style="color: #4d1d1d; text-align: center;"></p>
+                </div>
+
+                <!-- FORMULARIO -->
+                <form id="recomendacionForm">
+                    <label for="nombre">Tu Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                    
+                    <label for="recomendacion">Tu recomendación:</label>
+                    <textarea id="recomendacion" name="recomendacion" placeholder="Escribe tu recomendación de libro..." rows="4" required></textarea>
+                    
+                    <button type="submit">Enviar Recomendación</button>
+                </form>
+    
+                <div id="respuesta"></div>
+
+                <div class="recomendaciones">
+                    <h2>Recomendaciones Anteriores:</h2>
+                    <ul id="listaRecomendaciones"></ul>
+                </div>
+
+                <div id="respuesta"></div>
+            </div>
+        </main>
+    </div>
+    <footer id="footer"></footer>
+    
+    
+    <!-- JavaScript Vinculado-->
+    <script src="js/main.js"></script> 
+</body>
+</html>
+            
+        
